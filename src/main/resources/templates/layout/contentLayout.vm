@@ -6,7 +6,7 @@
     <META HTTP-EQUIV="Pragma"   CONTENT="no-cache">
     <META HTTP-EQUIV="Cache-Control"   CONTENT="no-cache">
     <META HTTP-EQUIV="Expires"   CONTENT="0">
-    <title>ASE平台</title>
+    <title>NLP模型测试平台</title>
     <link rel="shortcut icon" href="#springUrl('/static/common/img/head.gif')" type="image/x-icon" />
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -68,20 +68,5 @@
 </head>
 <body id="mainBody">
     $screen_content
-<div class="footer">
-    <div style="background: #1c1e20;color: white;padding-bottom: 5px;">
-        <div style="text-align: center;padding-top: 10px;">客服热线：400-123-1234 销售热线：400-123-4321 010-88888888
-            Email：ar@ase.com（团队） hr@ase.com（公司）
-        </div>
-        <div style="text-align: center">ase.com(京ICP证12345678) 人工智障团队版权所有©1999-2999</div>
-    </div>
-</div>
-<style type="text/css">
-    .footer {
-        width: 100%;
-        /*position: fixed;*/
-        bottom: 0;
-    }
-</style>
 </body>
 </html>

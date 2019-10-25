@@ -11,6 +11,7 @@ function getMassageList(param) {
             $("#pageNum").val(res.pages);
             var content = showMassageList(res);
             $('#massageList').html(content);//显示详情页面
+            $("html,body").animate({scrollTop:'0px'},500);
         }
     });
 }

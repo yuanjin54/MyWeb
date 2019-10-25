@@ -3,7 +3,7 @@ function getMassageList(param) {
         type: "POST",
         async: false,
         dataType: "json",
-        url: basePath + "/monitor/text-list?_time=" + new Date().getTime(),
+        url: basePath + "/monitor/abstract-list?_time=" + new Date().getTime(),
         data: param,
         success: function (res) {
             //将数据填充
@@ -11,6 +11,7 @@ function getMassageList(param) {
             $("#pageNum").val(res.pages);
             var content = showMassageList(res);
             $('#massageList').html(content);//显示详情页面
+            $("html,body").animate({scrollTop:'0px'},500);
         }
     });
 }
@@ -24,9 +25,8 @@ function showMassageList(data) {
             '<div class="news-date1">' + res[i].id + '</div>' +
             '</div>' +
             '<div class="news-bodys">' +
-            '<a class="username">' + res[i].speaker + '</a>' +
-            '<a class="verb">' + res[i].verb + '</a>' +
-            '<p class="centence">' + res[i].content + '</p></div></li>'
+            '<a class="verb">' + res[i].title + '</a>' +
+            '<p class="centence">' + res[i].abstractText + '</p></div></li>'
     }
     return html;
 }

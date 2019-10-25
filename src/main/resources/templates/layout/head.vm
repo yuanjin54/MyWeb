@@ -2,15 +2,15 @@
      style="padding-left: 0px;padding-right: 0px;height: 120px;margin-bottom: 3px;background: antiquewhite;">
     <div class="span12" style="margin-bottom: 14px;">
         <h3 style="font-size: 30px;margin-left: 38px;">
-            ASE平台
+            NLP模型测试平台
         </h3>
     </div>
     <div class="n_li">
         <p class="p1">
             <a class="a_but" onclick="selectUrl(this,'/welcome')">首页</a>
-            <a class="a_but" onclick="selectUrl(this,'/monitor/extraction')">言论提取</a>
+            <a class="a_but" onclick="selectUrl(this,'/monitor/extraction')">言论抽取</a>
             <a class="a_but" onclick="selectUrl(this,'/monitor/index')">言论列表</a>
-            <a class="a_but" onclick="selectUrl(this,'/monitor/abstract')">自动摘要生成</a>
+            <a class="a_but" onclick="selectUrl(this,'/monitor/abstract')">摘要生成</a>
             <a class="a_but" onclick="selectUrl(this,'/monitor/abstract-index')">摘要列表</a>
         </p>
     </div>
@@ -18,7 +18,7 @@
 <style type="text/css">
     .n_li {
         width: 100%;
-        background: midnightblue;
+        background: yellowgreen;
         height: 55px;
     }
 
@@ -53,11 +53,13 @@
     a.a_but:hover, a.a_but:active {
         background: yellow;
         color: black;
+        border-radius: 4px;
     }
 
     .but_cls {
         background: yellow;
         color: black;
+        border-radius: 4px;
     }
 </style>
 

@@ -11,21 +11,21 @@
         </ol>
         <div class="carousel-inner">
             <div class="item active">
+                <img alt="" src="/static/common/img/13.jpg"/>
+                <div class="carousel-caption">
+                    <h4>
+                        NLP
+                    </h4>
+                    <p>
+                        NLP(Natural Language Processing)
+                    </p>
+                </div>
+            </div>
+            <div class="item">
                 <img alt="" src="/static/common/img/14.jpg"/>
-            ##                <div class="carousel-caption">
-            ##                    <h4>
-            ##                        棒球
-            ##                    </h4>
-            ##                    <p>
-            ##                        棒球运动是一种以棒打球为主要特点，集体性、对抗性很强的球类运动项目，在美国、日本尤为盛行。
-            ##                    </p>
-            ##                </div>
             </div>
             <div class="item">
                 <img alt="" src="/static/common/img/15.jpg"/>
-            </div>
-            <div class="item">
-                <img alt="" src="/static/common/img/13.jpg"/>
             </div>
         </div>
         <a data-slide="prev" href="#carousel-528289" class="left carousel-control"></a>
@@ -34,24 +34,44 @@
 </div>
 
 <div class="span12">
-    <div class="hero-unit" style="padding: 3px 8%;height: 312px;">
-        <h1 style="color: blueviolet;">ASE平台介绍</h1>
+    <div class="hero-unit" style="padding: 3px 8%;height: 40%;">
+        <h3 style="color: turquoise;">平台说明</h3>
         <div>
             <p class="wel_p">
-                随着每天涌入的新闻信息越来越多，能够从海量信息中自动提取出不同人物对于不同事件的观点描述，
-                这个功能有利于我们对于新闻的阅读和观点的总结有很大作用。
+                该平台主要用于NLP模型的研究与测试。<br>
+                &emsp;&emsp;主要内容有: <br>
+                &emsp;&emsp;1、言论抽取模型: 可以自动化抽取输入文本中的言论信息，包括【言论者】、【关键词】、【言论信息】。<br>
+                &emsp;&emsp;2、言论列表: 对言论抽取模型历史测试结果展示。<br>
+                &emsp;&emsp;3、文本摘要生成模型: 对输入的文章进行自动化生成文章的摘要。<br>
+                &emsp;&emsp;4、摘要列表: 对文本摘要生成模型历史测试结果展示。<br>
             </p>
         </div>
     </div>
 </div>
 
-<style>
+<div class="footer">
+    <div style="background: teal;color: white;padding-bottom: 5px;">
+        <div style="text-align: center;padding-top: 10px;">
+            客服热线: 10086&emsp;Email: ase@yuanjin.fun(公司)
+        </div>
+        <div style="text-align: center">
+            yuanjin.fun(京ICP备19043883号)
+        </div>
+    </div>
+</div>
+
+
+<style type="text/css">
+    .footer {
+        width: 100%;
+    }
+
     .wel_p {
-        line-height: 36px;
+        line-height: 24px;
         font-size: larger;
-        font-family: cursive;
+        font-family: auto;
         text-indent: 2em;
         text-align: justify;
-        color: indigo;
+        color: slategrey;
     }
 </style>

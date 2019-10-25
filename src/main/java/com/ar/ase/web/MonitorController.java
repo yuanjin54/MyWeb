@@ -1,6 +1,7 @@
 package com.ar.ase.web;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.ar.ase.common.Page;
 import com.ar.ase.common.Result;
 import com.ar.ase.common.util.HttpUtil;
@@ -21,7 +22,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -67,10 +67,10 @@ public class MonitorController {
     @ResponseBody
     public Result extractList(HttpServletRequest request, HttpServletResponse response, String content) {
         Result result = new Result(1, "success");
-        String url = "http://39.100.3.165:8868/list";
-//        String url = "http://localhost:8868/list";
+        String url = "http://39.100.3.165:8668/speaking-extraction";
+//        String url = "http://localhost:8668/speaking-extraction";
         System.out.println(request.getParameter("content"));
-        String param = "username=" + content;
+        String param = "text=" + content;
         System.out.println(content);
         String ipAddress = IPUtils.getIpAddr(request);
         if (StringUtils.isBlank(content)) {
@@ -82,42 +82,28 @@ public class MonitorController {
         try {
             String responseStr = HttpUtil.sendPost(url, param);
             System.out.println(responseStr);
-            StringBuilder line = new StringBuilder();
-            List<Character> chars = new ArrayList<>();
-            chars.add('\'');
-            chars.add('"');
-            chars.add('’');
-            chars.add('"');
-            int k = 1;
-            for (int i = 0; i < responseStr.length(); i++) {
-                if (responseStr.charAt(i) == '[') {
-                    line = new StringBuilder();
-                } else if (responseStr.charAt(i) == ']') {
-                    String[] arr = line.toString().split(", ");
-                    if (arr.length < 3) {
-                        line = new StringBuilder();
-                        continue;
-                    }
-                    System.out.println(Arrays.toString(arr));
+            Result modelResult = JSONObject.toJavaObject(JSON.parseObject(responseStr), Result.class);
+            List data = (List) modelResult.getData();
+            if (data != null && data.size() > 0) {
+                for (Object obj : data) {
+                    List ele = (List) obj;
                     SpeechMessage message = SpeechMessage.builder()
-                            .speaker(arr[0])
-                            .verb(arr[1])
-                            .content(arr[2])
+                            .speaker(StringUtils.convertToStr(ele.get(1)))
+                            .verb(StringUtils.convertToStr(ele.get(2)))
+                            .content(StringUtils.convertToStr(ele.get(3)))
                             .ipAddress(ipAddress)
                             .createTime(new Date())
                             .build();
                     speechMassageService.insert(message);
-                    message.setId(k);
+                    message.setId((Integer) ele.get(0));
                     list.add(message);
-                    k++;
-                    line = new StringBuilder();
-                } else if (!chars.contains(responseStr.charAt(i))) {
-                    line.append(responseStr.charAt(i));
                 }
             }
+            result.setMsg(modelResult.getMsg());
             result.setData(list);
             return result;
         } catch (Exception e) {
+            result.setMsg(e.getMessage());
             result.setCode(0);
             return result;
         }
@@ -136,12 +122,11 @@ public class MonitorController {
 
     @RequestMapping("/abstract")
     @ResponseBody
-    public Result abstractList(HttpServletRequest request, HttpServletResponse response, String content) {
+    public Result abstractList(HttpServletRequest request, HttpServletResponse response, String title, String content) {
         Result result = new Result(1, "success");
-        String url = "http://39.100.3.165:8868/abstract";
-//        String url = "http://localhost:8868/abstract";
+        String url = "http://39.100.3.165:8668/abstract-extraction";
         System.out.println(request.getParameter("content"));
-        String param = "text_content=" + content;
+        String param = "text=" + content;
         System.out.println(content);
         String ipAddress = IPUtils.getIpAddr(request);
         if (StringUtils.isBlank(content)) {
@@ -152,14 +137,17 @@ public class MonitorController {
         try {
             String responseStr = HttpUtil.sendPost(url, param);
             System.out.println(responseStr);
-            Result result1 = JSON.parseObject(responseStr, Result.class);
+            Result modelResult = JSONObject.toJavaObject(JSON.parseObject(responseStr), Result.class);
             TextAbstract textAbstract = TextAbstract.builder()
+                    .title(title)
                     .sourceText(content)
-                    .abstractText(StringUtils.convertToStr(result1.getData()))
+                    .abstractText(StringUtils.convertToStr(modelResult.getData()))
                     .ipAddress(ipAddress)
                     .createTime(new Date())
                     .build();
-            textAbstractService.insert(textAbstract);
+            if (!"test".equals(content)) {
+                textAbstractService.insert(textAbstract);
+            }
             result.setData(textAbstract);
             return result;
         } catch (Exception e) {
@@ -169,7 +157,7 @@ public class MonitorController {
     }
 
 
-    @RequestMapping("/text-list")
+    @RequestMapping("/abstract-list")
     @ResponseBody
     public Page textAbstract(Page page, TextAbstract textAbstract) {
         PageInfo<TextAbstract> info = textAbstractService.getMassageListByPage(textAbstract, page.getPage(), page.getPageSize());

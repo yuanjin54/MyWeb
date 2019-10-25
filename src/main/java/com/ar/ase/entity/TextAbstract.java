@@ -18,8 +18,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TextAbstract {
+    private Integer id;
+    private String title;
     private String sourceText;
     private String abstractText;
+    private String keyword;
     private Integer yn;
     private String ipAddress;
     private Date createTime;

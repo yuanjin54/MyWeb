@@ -1,5 +1,5 @@
 #set($layout="layout/contentLayout.vm")
-<div style="padding: 0 5%;">
+<div style="padding: 0 5%;padding-bottom: 55px;">
     <input id="nowPage" type="hidden"/>
     <input id="pageNum" type="hidden"/>
     <textarea class="textarea" id="content_id" placeholder="请输入待抽取的文本内容..."></textarea>
@@ -7,7 +7,8 @@
     margin-left: 10px;color: white;" onclick="getMassageList()">提交
     </button>
     <div>
-        <ul style="padding-left: 0px" id="massageList">
+        <ul style="padding-left: 10px" id="massageList">
+            此处显示结果
         </ul>
     </div>
     <div id="page"></div>
@@ -15,12 +16,11 @@
 #parse("monitor/wait-model.vm")
 <style type="text/css">
     .input-border-main {
-        height: 37px;
-        font-size: 16px;
+        height: 30px;
+        font-size: 14px;
         padding: 10px;
         border-radius: 5px;
-        border: double;
-        border-color: darkgreen;
+        border: solid 2px #A6B3C0;
         width: 160px;
     }
 
@@ -34,16 +34,17 @@
         text-align: center;
         display: inline-block;
         float: left;
-        width: 5rem;
-        height: 5rem;
-        background: #f2f2f2;
+        width: 4rem;
+        height: 4rem;
+        background: darkorange;
+        border-radius: 8px;
     }
 
     .news-date1 {
         text-align: center;
         color: #666666;
         font-size: 1.5625rem;
-        padding-top: 30%;
+        padding-top: 26%;
     }
 
     .news-bodys {
@@ -53,67 +54,21 @@
     }
 
     .username {
-        font-size: 27px;
+        font-size: 21px;
         margin-right: 10px;
         color: blue;
     }
 
     .verb {
-        font-size: 18px;
+        font-size: 16px;
         color: brown;
     }
 
     .centence {
         text-indent: 2em;
         text-align: justify;
-        font-size: 16px;
+        font-size: 14px;
         color: #999;
-    }
-
-    #page {
-        margin: 20px auto;
-        color: #666;
-        display: block;
-        text-align: center;
-    }
-
-    #page ul {
-        padding-left: 0px;
-    }
-
-    #page li {
-        display: inline-block;
-        min-width: 30px;
-        height: 28px;
-        cursor: pointer;
-        color: #666;
-        font-size: 13px;
-        line-height: 28px;
-        background-color: #f9f9f9;
-        border: 1px solid #dce0e0;
-        text-align: center;
-        margin: 0 4px;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-    }
-
-    .xl-nextPage,
-    .xl-prevPage {
-        width: 60px;
-        color: #0073A9;
-        height: 28px;
-    }
-
-    #page li.xl-disabled {
-        opacity: .5;
-        cursor: no-drop;
-    }
-
-    #page li.xl-active {
-        background-color: #0073A9;
-        border-color: #0073A9;
-        color: #FFF
     }
 
     .textarea {
@@ -126,11 +81,13 @@
         background: snow;
         font-size: 17px;
     }
-    .btn-bt{
+
+    .btn-bt {
         background: silver;
         pointer-events: none;
     }
-    .btn-bt-no{
+
+    .btn-bt-no {
         background: royalblue;
     }
 </style>
@@ -138,7 +95,7 @@
     function getMassageList() {
         var param = [];
         var content = $("#content_id").val();
-        $("#submit").attr("disabled","disabled");
+        $("#submit").attr("disabled", "disabled");
         $("#submit").removeClass("btn-bt-no");
         $("#submit").addClass("btn-bt");
         $("#loadingModal").modal('show');
@@ -147,14 +104,17 @@
             async: false,
             dataType: "json",
             url: basePath + "/monitor/extract-list?_time=" + new Date().getTime(),
-            data: {content:content},
+            data: {content: content},
             success: function (res) {
                 $('#loadingModal').modal('hide');
                 if (res.code == 1) {
-                    var content = showMassageList(res.data);
-                    console.log(res.code)
-                    $('#massageList').html(content);//显示详情页面
-                }else {
+                    if (res.data == null || res.data.length < 1) {
+                        $('#massageList').html("您输入的文本中未包含任何言论信息！");
+                    } else {
+                        var content = showMassageList(res.data);
+                        $('#massageList').html(content);//显示详情页面
+                    }
+                } else {
                     bootbox.alert(res.msg);
                 }
                 $("#submit").removeAttr("disabled");
