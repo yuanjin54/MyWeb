@@ -7,7 +7,7 @@
             </div>
         </div>
     </div>
-    <div style="padding: 0 5%;text-align: center;">
+    <div style="padding: 0 5%;text-align: center;padding-bottom: 20px;">
         <input class="qa-input" type="text" id="question" name="question"/>
         <a onclick="getMassageList()">发送</a>
     </div>
@@ -22,7 +22,7 @@
     }
 
     .qa-content {
-        min-height: 480px;
+        min-height: 400px;
         overflow-y: auto;
         max-height: 480px;
         padding: 10px;
