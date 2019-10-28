@@ -3,7 +3,7 @@
     padding-top: 20px;
     padding-right: 8%;padding-top: 10px;">
     <input type="text" id="key-words" class="input-border-main" name="q" size="30" placeholder="请输入关键词"/>
-    <button style="background-color: green;color: aliceblue;margin-bottom: 5px;height: 30px;border-radius: 4px;"
+    <button style="background-color: tomato;color: aliceblue;margin-bottom: 5px;height: 30px;border-radius: 4px;"
             type="button"
             onclick="search()">搜索
     </button>

@@ -135,7 +135,7 @@
     }
 
     .btn-bt-no {
-        background: royalblue;
+        background: tomato;
 
     }
 </style>
