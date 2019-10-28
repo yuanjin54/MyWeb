@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * MonitorController /monitor/index
@@ -51,6 +52,11 @@ public class MonitorController {
     @GetMapping("/abstract-index")
     public String absIndex() {
         return "monitor/abstract-index";
+    }
+
+    @GetMapping("/robot-qa")
+    public String questionAnswer() {
+        return "monitor/robot-qa";
     }
 
     @GetMapping("/abstract")
@@ -165,5 +171,42 @@ public class MonitorController {
         result.setTotal(Integer.parseInt(info.getTotal() + ""));
         result.setRows(info.getList());
         return result;
+    }
+
+    @RequestMapping("/robot/qa")
+    @ResponseBody
+    public Result qa(HttpServletRequest request, HttpServletResponse response, String content) {
+        Result result = new Result(1, "success");
+        List<String> msgs = new ArrayList<>();
+        msgs.add("我不知道你在说什么？");
+        msgs.add("你能再说一遍吗？");
+        msgs.add("不好意思，我听不懂。");
+        msgs.add("麻烦你再说一遍，我耳朵有点不好使！");
+        msgs.add("你是在逗我吗？请说人话吧。");
+        msgs.add("我很无语，能再说一遍不？");
+        Random random = new Random();
+        int idx = random.nextInt(msgs.size());
+        result.setData(msgs.get(idx));
+        return result;
+//        String url = "http://39.100.3.165:8668/qa";
+//        System.out.println(request.getParameter("content"));
+//        String param = "content=" + content;
+//        System.out.println(content);
+//        String ipAddress = IPUtils.getIpAddr(request);
+//        if (StringUtils.isBlank(content)) {
+//            result.setCode(0);
+//            result.setMsg("输入为空，请重新输入！");
+//            return result;
+//        }
+//        try {
+//            String responseStr = HttpUtil.sendPost(url, param);
+//            System.out.println(responseStr);
+//            Result modelResult = JSONObject.toJavaObject(JSON.parseObject(responseStr), Result.class);
+//            result.setData(modelResult.getData());
+//            return result;
+//        } catch (Exception e) {
+//            result.setCode(0);
+//            return result;
+//        }
     }
 }

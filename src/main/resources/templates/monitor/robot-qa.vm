@@ -1,0 +1,120 @@
+#set($layout="layout/contentLayout.vm")
+<div>
+    <div class="qa">
+        <div class="qa-content" id="qa-list">
+            <div class='qa-left'><img style="width: 20px;margin-left: 5px;" src='/static/common/img/robot.png'/>
+                <p class='qa-msg-l'>Hi，我是智能客服小新，请问有什么可以帮您？</p>
+            </div>
+        </div>
+    </div>
+    <div style="padding: 0 5%;text-align: center;">
+        <input class="qa-input" type="text" id="question" name="question"/>
+        <a onclick="getMassageList()">发送</a>
+    </div>
+</div>
+#parse("monitor/wait-model.vm")
+<style type="text/css">
+    .qa {
+        border-radius: 5px;
+        border: 1px solidred;
+        padding: 10px;
+        padding: 0 5%;
+    }
+
+    .qa-content {
+        min-height: 480px;
+        overflow-y: auto;
+        max-height: 480px;
+        padding: 10px;
+        border-radius: 3px;
+        margin: 10px 2px;
+        background: floralwhite;
+        margin: 0 auto;
+        width: 333px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .qa-content::-webkit-scrollbar {
+        display: none
+    }
+
+    .qa-input {
+        height: 30px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding-left: 4px;
+        font-size: 14px;
+    }
+
+    .qa-right {
+        float: right;
+        padding: 5px;
+    }
+
+    .qa-left {
+        padding: 5px;
+    }
+
+    .qa-msg-r {
+        display: inline-block;
+        text-align: left;
+        background: burlywood;
+        border-radius: 3px;
+        max-width: 240px;
+        padding: 5px;
+    }
+
+    .qa-msg-l {
+        display: inline-block;
+        text-align: left;
+        background: greenyellow;
+        border-radius: 3px;
+        max-width: 240px;
+        padding: 5px;
+    }
+</style>
+<script>
+    function getMassageList() {
+        var param = [];
+        var content = $("#question").val();
+        $("#qa-list").append(showQusetion(content));
+        $("#loadingModal").modal('show');
+        $.ajax({
+            type: "POST",
+            async: false,
+            dataType: "json",
+            url: basePath + "/monitor/robot/qa?_time=" + new Date().getTime(),
+            data: {content: content},
+            success: function (res) {
+                $('#loadingModal').modal('hide');
+                if (res.code == 1) {
+                    $("#qa-list").append(showAnswer(res.data));
+                    $("#question").val("");
+                    var showContent = $(".qa-content");
+                    showContent[0].scrollTop = showContent[0].scrollHeight;
+                } else {
+                    bootbox.alert(res.msg);
+                }
+                $("#submit").removeAttr("disabled");
+                $("#submit").removeClass("btn-bt");
+                $("#submit").addClass("btn-bt-no");
+            }
+        });
+    }
+
+    function showQusetion(data) {
+        var html = "<div class='qa-right'>";
+        html += "<p class='qa-msg-r'>" + data + "</p><img style='width: 20px;margin-left: 5px;' src='/static/common/img/people.png'/>"
+        html += "</div><div style='clear: both;'></div>";
+        return html;
+    }
+
+    function showAnswer(data) {
+        var html = "<div class='qa-left'><img style='width: 20px;margin-right: 5px;' src='/static/common/img/robot.png'/>";
+        html += "<p class='qa-msg-l'>" + data + "</p>"
+        html += "</div>";
+        return html;
+    }
+</script>

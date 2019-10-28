@@ -11,7 +11,8 @@
             <a class="a_but" onclick="selectUrl(this,'/monitor/extraction')">言论抽取</a>
             <a class="a_but" onclick="selectUrl(this,'/monitor/index')">言论列表</a>
             <a class="a_but" onclick="selectUrl(this,'/monitor/abstract')">摘要生成</a>
-            <a class="a_but" onclick="selectUrl(this,'/monitor/abstract-index')">摘要列表</a>
+##            <a class="a_but" onclick="selectUrl(this,'/monitor/abstract-index')">摘要列表</a>
+            <a class="a_but" onclick="selectUrl(this,'/monitor/robot-qa')">机器对话</a>
         </p>
     </div>
 </div>
