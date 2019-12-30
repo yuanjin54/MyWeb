@@ -3,7 +3,7 @@
     <div class="qa">
         <div class="qa-content" id="qa-list">
             <div class='qa-left'><img style="width: 20px;margin-left: 5px;" src='/static/common/img/robot.png'/>
-                <p class='qa-msg-l'>Hi，我是智能客服小新，请问有什么可以帮您？</p>
+                <p class='qa-msg-l'>Hi，我是智能客服小龙，请问有什么可以帮您？</p>
             </div>
         </div>
     </div>
@@ -76,6 +76,12 @@
     }
 </style>
 <script>
+    $('#question').bind('keypress', function (event) {
+        if (event.keyCode == 13) {
+            getMassageList()
+        }
+    });
+
     function getMassageList() {
         var param = [];
         var content = $("#question").val();
@@ -83,7 +89,6 @@
         $("#loadingModal").modal('show');
         $.ajax({
             type: "POST",
-            async: false,
             dataType: "json",
             url: basePath + "/monitor/robot/qa?_time=" + new Date().getTime(),
             data: {content: content},
